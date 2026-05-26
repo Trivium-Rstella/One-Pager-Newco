@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>One Pager · NewCo</title>
+  <style>
+    /* ── Password Gate ── */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #063f3f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+    #gate-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 44px 36px;
+      width: 360px;
+      max-width: 90vw;
+      box-shadow: 0 24px 60px rgba(6,63,63,.35);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #gate-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #063f3f, #d8df19);
+    }
+    #gate-logo {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-weight: 900;
+      color: #0b5b56;
+      margin-bottom: 6px;
+    }
+    #gate-title {
+      font-size: 22px;
+      font-weight: 950;
+      color: #111416;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    #gate-sub {
+      font-size: 12.5px;
+      color: #68736f;
+      margin-bottom: 26px;
+      line-height: 1.4;
+    }
+    #gate-input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #dce5df;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #111416;
+      outline: none;
+      transition: border-color .18s;
+      background: #f4f7f4;
+      text-align: center;
+      letter-spacing: .08em;
+    }
+    #gate-input:focus { border-color: #063f3f; background: #fff; }
+    #gate-btn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px;
+      background: #063f3f;
+      color: #d8df19;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .18s, transform .12s;
+    }
+    #gate-btn:hover { background: #0b5b56; transform: translateY(-1px); }
+    #gate-btn:active { transform: translateY(0); }
+    #gate-error {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #c0392b;
+      font-weight: 700;
+      display: none;
+    }
+    #gate-footer {
+      margin-top: 18px;
+      font-size: 10.5px;
+      color: #a0aaa7;
+      letter-spacing: .06em;
+    }
+    /* shake animation */
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(6px)}
+    }
+    .shake { animation: shake .4s ease; }
+
+    /* hide main content until unlocked */
+    #main-content { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ── PASSWORD GATE ── -->
+<div id="gate">
+  <div id="gate-box">
+    <div id="gate-logo">Procivil × NewCo</div>
+    <div id="gate-title">One Pager</div>
+    <div id="gate-sub">Documento restringido.<br>Introduce la contraseña para continuar.</div>
+    <input id="gate-input" type="password" placeholder="Contraseña" autocomplete="current-password" />
+    <button id="gate-btn" onclick="checkPass()">Acceder →</button>
+    <div id="gate-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+    <div id="gate-footer">CONFIDENCIAL · SOLO USO INTERNO</div>
+  </div>
+</div>
+
+<script>
+  // Allow Enter key to submit
+  document.getElementById('gate-input').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') checkPass();
+  });
+
+  function checkPass() {
+    const val = document.getElementById('gate-input').value;
+    if (val === 'newco2026!') {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main-content').style.display = '';
+    } else {
+      const box = document.getElementById('gate-box');
+      const err = document.getElementById('gate-error');
+      err.style.display = 'block';
+      box.classList.remove('shake');
+      void box.offsetWidth; // reflow to restart animation
+      box.classList.add('shake');
+      document.getElementById('gate-input').value = '';
+      document.getElementById('gate-input').focus();
+    }
+  }
+</script>
+
+<!-- ── MAIN CONTENT (hidden until password) ── -->
+<div id="main-content">
+<style>
+    :root{
+      --green:#063f3f;
+      --green2:#0b5b56;
+      --lime:#d8df19;
+      --black:#111416;
+      --ink:#26312e;
+      --muted:#68736f;
+      --soft:#f4f7f4;
+      --line:#dce5df;
+      --amber:#fff3c7;
+      --white:#fff;
+    }
+
+    @page { size:A4 landscape; margin:0; }
+
+    *{box-sizing:border-box}
+    body{margin:0;background:#e9eeea;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--black)}
+
+    .page{
+      width:297mm;
+      height:210mm;
+      margin:0 auto;
+      background:#fff;
+      padding:4.6mm 5.8mm 4.0mm;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .page:before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3mm;
+      background:linear-gradient(90deg,var(--green),var(--lime));
+    }
+
+    .page:after{
+      content:"";
+      position:absolute;
+      right:-20mm;
+      top:-23mm;
+      width:70mm;
+      height:70mm;
+      border-radius:50%;
+      background:rgba(216,223,25,.15);
+    }
+
+    .content{
+      position:relative;
+      z-index:1;
+      height:100%;
+      display:grid;
+      grid-template-rows:auto auto 1fr auto auto;
+      gap:2.4mm;
+    }
+
+    .header{
+      display:grid;
+      grid-template-columns:1.42fr .82fr;
+      gap:3.0mm;
+      align-items:stretch;
+    }
+
+    .kicker{
+      font-size:5.85pt;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-weight:950;
+      color:var(--green2);
+    }
+
+    h1{
+      margin:.7mm 0 .8mm;
+      font-size:15.5pt;
+      line-height:.95;
+      letter-spacing:-.055em;
+      max-width:184mm;
+    }
+
+    .sub{
+      font-size:6.4pt;
+      line-height:1.20;
+      color:#33403c;
+      max-width:184mm;
+    }
+
+    .thesis{
+      border-radius:3.4mm;
+      background:var(--green);
+      color:#fff;
+      padding:2.15mm 2.5mm;
+      box-shadow:0 3mm 9mm rgba(6,63,63,.09);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .thesis:after{
+      content:"";
+      position:absolute;
+      right:-13mm;
+      bottom:-17mm;
+      width:42mm;
+      height:42mm;
+      border-radius:50%;
+      background:var(--lime);
+    }
+
+    .thesis .kicker{color:rgba(255,255,255,.75)}
+    .thesis p{
+      margin:.7mm 0 0;
+      font-size:6.1pt;
+      line-height:1.20;
+      color:#fff;
+      position:relative;
+      z-index:1;
+    }
+
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:2.2mm;
+    }
+
+    .metric,.card,.mini,.table,.note,.rep,.evol{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:3.35mm;
+      box-shadow:0 2.7mm 7mm rgba(6,63,63,.055);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .metric:hover,.card:hover,.mini:hover,.table:hover,.note:hover,.rep:hover,.evol:hover{
+      transform:translateY(-4px);
+      box-shadow:0 5mm 13mm rgba(6,63,63,.16);
+      border-color:rgba(6,63,63,.28);
+    }
+
+    .metric{
+      padding:2.0mm 2.2mm 1.8mm;
+      min-height:15.5mm;
+    }
+
+    .metric.e{background:var(--amber)}
+    .metric.hero{
+      background:var(--green);
+      color:#fff;
+      border-color:var(--green);
+    }
+
+    .label{
+      font-size:4.85pt;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:950;
+      color:var(--muted);
+      margin-bottom:.68mm;
+    }
+
+    .hero .label{color:rgba(255,255,255,.7)}
+
+    .value{
+      font-size:10.4pt;
+      line-height:.95;
+      letter-spacing:-.05em;
+      font-weight:950;
+      color:var(--green);
+      white-space:nowrap;
+    }
+
+    .hero .value{color:var(--lime)}
+
+    .desc{
+      font-size:4.7pt;
+      line-height:1.10;
+      color:var(--muted);
+      margin-top:.4mm;
+    }
+
+    .hero .desc{color:rgba(255,255,255,.78)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:73mm 75mm 1fr;
+      gap:2.6mm;
+      min-height:0;
+    }
+
+    .stack{
+      display:grid;
+      gap:2.4mm;
+      min-height:0;
+    }
+
+    .card,.table,.rep{padding:2.0mm 2.2mm;overflow:hidden}
+
+    .head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1.3mm;
+      margin-bottom:.85mm;
+    }
+
+    h2{
+      margin:0;
+      font-size:7.8pt;
+      line-height:1.0;
+      letter-spacing:-.035em;
+    }
+
+    .badge{
+      white-space:nowrap;
+      border:1px solid var(--line);
+      background:var(--soft);
+      border-radius:999px;
+      padding:.85mm 1.22mm;
+      font-size:4.45pt;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-weight:950;
+      color:var(--green);
+    }
+
+    .badge.e{background:var(--amber);color:#8e6700}
+
+    .bars{display:grid;gap:.78mm}
+
+    .bar-row{
+      display:grid;
+      grid-template-columns:23mm 1fr 13mm;
+      gap:1.0mm;
+      align-items:center;
+    }
+
+    .bar-row.wide{grid-template-columns:31mm 1fr 14mm}
+
+    .bar-label{
+      font-size:4.85pt;
+      line-height:1.04;
+      font-weight:850;
+      color:var(--ink);
+    }
+
+    .track{
+      height:3.2mm;
+      border-radius:999px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      overflow:hidden;
+    }
+
+    .fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--green),var(--lime));
+    }
+
+    .bar-value{
+      font-size:4.85pt;
+      font-weight:950;
+      text-align:right;
+      color:var(--ink);
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.05mm;
+    }
+
+    .mini{
+      padding:1.15mm;
+      min-height:10mm;
+    }
+
+    .mini.e{background:var(--amber)}
+    .mini .label{font-size:4.3pt;margin-bottom:.3mm}
+    .mini .value{font-size:9.0pt}
+    .mini .desc{font-size:4.5pt;margin-top:.3mm}
+
+    .evol-grid{
+      display:grid;
+      gap:1.4mm;
+    }
+
+    .evol{
+      padding:1.3mm 1.55mm;
+      background:#fff;
+    }
+
+    .evol-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:1.0mm;
+      margin-bottom:.35mm;
+    }
+
+    .evol-top .name{
+      font-size:4.3pt;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+      font-weight:950;
+      color:var(--muted);
+    }
+
+    .headline{
+      font-size:7.25pt;
+      line-height:.95;
+      font-weight:950;
+      color:var(--green);
+      letter-spacing:-.05em;
+      white-space:nowrap;
+    }
+
+    .spark{
+      display:flex;
+      align-items:flex-end;
+      gap:.75mm;
+      height:10.5mm;
+    }
+
+    .col{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:.2mm;
+    }
+
+    .barbox{
+      height:7.5mm;
+      width:100%;
+      display:flex;
+      align-items:flex-end;
+      padding:0 .5mm .5mm;
+      border:1px solid rgba(219,228,222,.8);
+      border-radius:1.75mm;
+      background:linear-gradient(180deg,rgba(6,63,63,.035),rgba(6,63,63,0));
+    }
+
+    .vbar{
+      width:100%;
+      border-radius:1.55mm 1.55mm .7mm .7mm;
+      background:linear-gradient(180deg,var(--lime),var(--green));
+    }
+
+    .xlab{
+      font-size:3.75pt;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:var(--muted);
+      line-height:1;
+      text-align:center;
+    }
+
+    .xval{
+      font-size:4.4pt;
+      font-weight:900;
+      color:var(--ink);
+    }
+
+    .trow{
+      display:grid;
+      grid-template-columns:1.02fr .5fr .55fr;
+      gap:1mm;
+      align-items:center;
+      min-height:3.6mm;
+      padding:.32mm .7mm;
+      border-bottom:1px solid var(--line);
+    }
+
+    .trow:last-child{border-bottom:none}
+
+    .trow.headrow{
+      min-height:3.9mm;
+      border-bottom:none;
+      background:var(--green);
+      border-radius:1.7mm;
+    }
+
+    .trow.headrow div{
+      color:#fff;
+      font-size:4.1pt;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+    }
+
+    .trow div{
+      font-size:4.5pt;
+      line-height:1.04;
+      color:var(--ink);
+    }
+
+    .trow b{color:var(--green)}
+    .trow.total{
+      background:var(--green);
+      border-radius:1.9mm;
+      border-bottom:none;
+      margin-top:.6mm;
+    }
+    .trow.total div{color:#fff;font-weight:950}
+    .trow.total b{color:var(--lime)}
+
+    .finance-split{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:1.3mm;
+      align-items:start;
+    }
+
+    .tiny-table{
+      border:1px solid var(--line);
+      border-radius:2.3mm;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .tiny-title{
+      background:var(--soft);
+      padding:.75mm 1mm;
+      font-size:4.55pt;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-weight:950;
+      color:var(--green);
+      border-bottom:1px solid var(--line);
+    }
+
+    .rep{background:var(--soft)}
+
+    .rep-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.85mm;
+    }
+
+    .rep-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:2.2mm;
+      padding:.95mm 1.05mm;
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+
+    .rep-item:hover{
+      transform:translateY(-3px);
+      box-shadow:0 3mm 8mm rgba(6,63,63,.12);
+    }
+
+    .rep-item .title{
+      font-size:4.3pt;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-weight:950;
+      color:var(--green);
+      margin-bottom:.25mm;
+    }
+
+    .rep-item .text{
+      font-size:4.55pt;
+      line-height:1.10;
+      color:#34403c;
+    }
+
+    .note{
+      padding:1.1mm 1.4mm;
+      background:var(--soft);
+      font-size:4.7pt;
+      line-height:1.13;
+      color:#3d4844;
+    }
+
+    .footer{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:1.8mm;
+      align-items:center;
+      font-size:4.85pt;
+      color:var(--muted);
+    }
+
+    .legend{
+      display:flex;
+      gap:1.2mm;
+      flex-wrap:wrap;
+    }
+
+    .legend span{
+      display:inline-flex;
+      align-items:center;
+      gap:.8mm;
+      padding:.78mm 1.15mm;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      white-space:nowrap;
+    }
+
+    .dot{width:1.65mm;height:1.65mm;border-radius:50%;display:inline-block}
+    .real{background:var(--green)}
+    .est{background:#d8a000}
+    .claim{background:#7b878b}
+    .right{text-align:right}
+    sup.e{font-size:3.9pt;color:#9b7200;font-weight:950}
+    strong{font-weight:950}
+
+    /* === Sector dashboard === */
+    .sector{
+      display:grid;
+      grid-template-columns:1.6fr 1.6fr 2fr 1.8fr;
+      gap:2.4mm;
+      align-items:stretch;
+    }
+    .sec-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:3.35mm;
+      box-shadow:0 2.7mm 7mm rgba(6,63,63,.055);
+      padding:2.0mm 2.2mm;
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      overflow:hidden;
+      position:relative;
+    }
+    .sec-card:hover{transform:translateY(-3px);box-shadow:0 5mm 13mm rgba(6,63,63,.16);border-color:rgba(6,63,63,.28)}
+    .sec-card.dark{background:var(--green);color:#fff;border-color:var(--green)}
+    .sec-card.dark .sec-title{color:rgba(255,255,255,.78)}
+    .sec-card.dark .sec-headline{color:var(--lime)}
+    .sec-card.dark .sec-sub{color:rgba(255,255,255,.6)}
+    .sec-title{
+      font-size:4.25pt;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      font-weight:950;
+      color:var(--muted);
+      margin-bottom:.4mm;
+    }
+    .sec-headline{
+      font-size:8.5pt;
+      line-height:.92;
+      letter-spacing:-.045em;
+      font-weight:950;
+      color:var(--green);
+    }
+    .sec-sub{font-size:4.55pt;color:var(--muted);margin-top:.4mm;line-height:1.1}
+    .sec-bars{display:grid;gap:.5mm;margin-top:.85mm}
+    .sec-bar{display:grid;grid-template-columns:14mm 1fr 10mm;gap:.85mm;align-items:center}
+    .sec-bar .sb-l{font-size:4.4pt;font-weight:850;color:var(--ink)}
+    .sec-bar .sb-t{height:2.4mm;background:var(--soft);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+    .sec-bar .sb-f{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--lime))}
+    .sec-bar .sb-v{font-size:4.4pt;font-weight:950;text-align:right;color:var(--ink)}
+    .sec-card.dark .sec-bar .sb-l,.sec-card.dark .sec-bar .sb-v{color:#fff}
+    .sec-card.dark .sec-bar .sb-t{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18)}
+
+    .mini-spark{display:flex;align-items:flex-end;gap:.6mm;height:10mm;margin-top:.6mm}
+    .mini-spark .ms-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.25mm}
+    .mini-spark .ms-box{height:7.5mm;width:100%;display:flex;align-items:flex-end;padding:0 .35mm .35mm;border:1px solid rgba(219,228,222,.7);border-radius:1.3mm;background:linear-gradient(180deg,rgba(6,63,63,.04),rgba(6,63,63,0))}
+    .sec-card.dark .ms-box{border-color:rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0))}
+    .mini-spark .ms-bar{width:100%;border-radius:1.2mm 1.2mm .5mm .5mm;background:linear-gradient(180deg,var(--lime),var(--green))}
+    .mini-spark .ms-l{font-size:3.5pt;font-weight:950;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .mini-spark .ms-v{font-size:4pt;font-weight:900;color:var(--ink)}
+    .sec-card.dark .mini-spark .ms-l{color:rgba(255,255,255,.65)}
+    .sec-card.dark .mini-spark .ms-v{color:#fff}
+
+    /* Funnel */
+    .funnel{display:grid;gap:.45mm;margin-top:.7mm}
+    .fnl{display:grid;grid-template-columns:30mm 1fr 10mm;gap:.7mm;align-items:center}
+    .fnl .fnl-l{font-size:4.3pt;font-weight:850;color:var(--ink)}
+    .fnl .fnl-box{height:3mm;background:var(--soft);border:1px solid var(--line);border-radius:999px;overflow:hidden;display:flex;align-items:center}
+    .fnl .fnl-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:999px}
+    .fnl .fnl-v{font-size:4.3pt;font-weight:950;text-align:right;color:var(--green)}
+
+    /* Sector second row */
+    .sector2{display:grid;grid-template-columns:1.4fr 1.4fr 1.4fr 1.8fr;gap:2.4mm;margin-top:2.0mm}
+
+    /* Comparable M&A table */
+    .comp-row{display:grid;grid-template-columns:14mm 1fr 14mm;gap:.7mm;align-items:center;padding:.4mm 0;border-bottom:1px solid var(--line)}
+    .comp-row:last-child{border-bottom:none}
+    .comp-row .cr-geo{font-size:3.9pt;font-weight:950;color:var(--green);background:var(--soft);border-radius:1.4mm;text-align:center;padding:.4mm}
+    .comp-row .cr-deal{font-size:4.4pt;font-weight:900;color:var(--ink);line-height:1.1}
+    .comp-row .cr-yr{font-size:3.9pt;font-weight:850;color:var(--muted);text-align:right}
+
+    /* Floating verification badge */
+    .verif-badge{
+      position:fixed;
+      top:10mm;
+      right:10mm;
+      background:var(--green);
+      color:var(--lime);
+      padding:1.6mm 3mm;
+      border-radius:999px;
+      font-size:5.5pt;
+      font-weight:950;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      box-shadow:0 5mm 12mm rgba(6,63,63,.25);
+      z-index:50;
+      display:inline-flex;
+      align-items:center;
+      gap:1.4mm;
+    }
+    .verif-badge .bdot{
+      width:1.5mm;height:1.5mm;border-radius:50%;background:var(--lime);
+      box-shadow:0 0 0 0 rgba(216,223,25,.85);
+      animation:bp 1.8s ease-out infinite;
+    }
+    @keyframes bp{0%{box-shadow:0 0 0 0 rgba(216,223,25,.75)}70%{box-shadow:0 0 0 3mm rgba(216,223,25,0)}100%{box-shadow:0 0 0 0 rgba(216,223,25,0)}}
+
+    @media print{
+      body{background:#fff}
+      .page{margin:0}
+      .verif-badge{display:none}
+      .metric:hover,.card:hover,.mini:hover,.table:hover,.note:hover,.rep:hover,.evol:hover,.rep-item:hover{
+        transform:none;
+        box-shadow:0 2.7mm 7mm rgba(6,63,63,.055)
+      }
+    }
+
+    /* === RESPONSIVE MÓVIL & TABLET === */
+    @media (max-width: 900px){
+      body{background:#e9eeea;padding:8px}
+      .page{
+        width:100% !important;
+        max-width:100% !important;
+        height:auto !important;
+        min-height:auto !important;
+        padding:14px 12px !important;
+        border-radius:14px;
+        box-shadow:0 12px 40px rgba(6,63,63,.10);
+      }
+      .page:before{height:5px}
+      .content{height:auto !important;display:block !important;gap:0 !important}
+      .header{
+        display:block !important;
+        margin-bottom:14px;
+      }
+      h1{
+        font-size:24px !important;
+        line-height:1.05 !important;
+        letter-spacing:-.025em !important;
+        margin:6px 0 10px !important;
+        max-width:100% !important;
+      }
+      .sub{font-size:13px !important;line-height:1.4 !important;max-width:100% !important;margin-bottom:14px}
+      .thesis{
+        margin-top:14px;
+        padding:16px 18px !important;
+        border-radius:18px !important;
+      }
+      .thesis p{font-size:13.5px !important;line-height:1.4 !important;margin-top:6px !important}
+      .kicker{font-size:10.5px !important;letter-spacing:.16em !important}
+
+      .metrics{
+        grid-template-columns:repeat(2,1fr) !important;
+        gap:10px !important;
+        margin-bottom:14px;
+      }
+      .metric{
+        padding:12px 12px 10px !important;
+        min-height:auto !important;
+        border-radius:14px !important;
+      }
+      .label{font-size:10.5px !important;letter-spacing:.13em !important;margin-bottom:4px !important}
+      .value{font-size:22px !important;letter-spacing:-.03em !important}
+      .desc{font-size:11px !important;margin-top:4px !important;line-height:1.25 !important}
+
+      .grid{
+        display:block !important;
+        gap:0 !important;
+      }
+      .stack{display:block !important;gap:0 !important}
+      .card,.table,.rep{
+        padding:14px 16px !important;
+        margin-bottom:14px;
+        border-radius:16px !important;
+      }
+      .head{margin-bottom:10px !important;gap:8px !important}
+      h2{font-size:17px !important;line-height:1.15 !important;letter-spacing:-.02em !important}
+      .badge{font-size:9.5px !important;padding:4px 10px !important;letter-spacing:.12em !important}
+
+      .bars{gap:6px !important}
+      .bar-row{grid-template-columns:90px 1fr 60px !important;gap:8px !important}
+      .bar-row.wide{grid-template-columns:115px 1fr 70px !important}
+      .bar-label{font-size:11.5px !important;line-height:1.2 !important}
+      .track{height:11px !important;border-radius:999px !important}
+      .bar-value{font-size:11.5px !important}
+
+      .rep-grid{grid-template-columns:1fr 1fr !important;gap:8px !important}
+      .rep-item{padding:10px 11px !important;border-radius:12px !important}
+      .rep-item .title{font-size:10px !important;letter-spacing:.12em !important;margin-bottom:3px !important}
+      .rep-item .text{font-size:11.5px !important;line-height:1.25 !important}
+
+      .evol-grid{gap:10px !important}
+      .evol{padding:11px 12px !important;border-radius:12px !important}
+      .evol-top{margin-bottom:6px !important;gap:8px !important}
+      .evol-top .name{font-size:10.5px !important;letter-spacing:.13em !important}
+      .headline{font-size:16px !important;letter-spacing:-.025em !important}
+      .spark{height:60px !important;gap:5px !important}
+      .barbox{height:46px !important;border-radius:6px !important;padding:0 2px 2px !important}
+      .vbar{border-radius:4px 4px 1.5px 1.5px !important}
+      .xlab{font-size:9.5px !important}
+      .xval{font-size:10.5px !important}
+
+      .finance-split{
+        display:block !important;
+      }
+      .tiny-table{
+        margin-bottom:12px;
+        border-radius:14px !important;
+      }
+      .tiny-title{font-size:10.5px !important;padding:7px 10px !important;letter-spacing:.12em !important}
+      .trow{
+        grid-template-columns:1.4fr .55fr .65fr !important;
+        gap:8px !important;
+        min-height:auto !important;
+        padding:6px 10px !important;
+      }
+      .trow div{font-size:11.5px !important;line-height:1.2 !important}
+      .trow.headrow{min-height:auto !important;padding:7px 10px !important;border-radius:8px !important}
+      .trow.headrow div{font-size:10px !important;letter-spacing:.12em !important}
+      .trow.total{border-radius:8px !important;margin-top:4px !important}
+
+      .note{
+        padding:12px 14px !important;
+        font-size:12px !important;
+        line-height:1.4 !important;
+        border-radius:14px !important;
+        margin-bottom:14px;
+      }
+
+      .sector,.sector2{
+        display:block !important;
+        gap:0 !important;
+        margin-top:0 !important;
+      }
+      .sec-card{
+        padding:14px 16px !important;
+        margin-bottom:14px;
+        border-radius:16px !important;
+      }
+      .sec-title{font-size:10.5px !important;letter-spacing:.13em !important;margin-bottom:4px !important}
+      .sec-headline{font-size:20px !important;letter-spacing:-.03em !important;line-height:1.05 !important}
+      .sec-sub{font-size:11.5px !important;line-height:1.3 !important;margin-top:5px !important}
+      .sec-bars{gap:5px !important;margin-top:9px !important}
+      .sec-bar{grid-template-columns:80px 1fr 60px !important;gap:8px !important}
+      .sec-bar .sb-l,.sec-bar .sb-v{font-size:11px !important}
+      .sec-bar .sb-t{height:9px !important}
+
+      .mini-spark{height:65px !important;gap:4px !important;margin-top:9px !important}
+      .mini-spark .ms-box{height:46px !important;border-radius:6px !important;padding:0 2px 2px !important}
+      .mini-spark .ms-l{font-size:9.5px !important}
+      .mini-spark .ms-v{font-size:10px !important}
+
+      .funnel{gap:5px !important;margin-top:9px !important}
+      .fnl{grid-template-columns:130px 1fr 50px !important;gap:8px !important}
+      .fnl .fnl-l{font-size:11px !important}
+      .fnl .fnl-box{height:10px !important}
+      .fnl .fnl-v{font-size:11px !important}
+
+      .comp-row{grid-template-columns:32px 1fr 48px !important;gap:8px !important;padding:6px 0 !important}
+      .comp-row .cr-geo{font-size:10px !important;padding:3px 0 !important;border-radius:6px !important}
+      .comp-row .cr-deal{font-size:11.5px !important;line-height:1.2 !important}
+      .comp-row .cr-yr{font-size:10.5px !important}
+
+      .footer{
+        display:block !important;
+        font-size:11.5px !important;
+        line-height:1.4 !important;
+        margin-top:10px;
+        border-top:1px solid var(--line);
+        padding-top:14px;
+      }
+      .legend{margin-bottom:10px;gap:6px !important}
+      .legend span{padding:5px 9px !important;font-size:11px !important;border-radius:999px !important;gap:5px !important}
+      .dot{width:8px !important;height:8px !important}
+      .right{text-align:left !important;color:var(--muted)}
+    }
+
+    @media (max-width: 560px){
+      .metrics{grid-template-columns:1fr 1fr !important}
+      .value{font-size:20px !important}
+      .rep-grid{grid-template-columns:1fr !important}
+      h1{font-size:21px !important}
+      .bar-row.wide,.bar-row{grid-template-columns:80px 1fr 56px !important;gap:7px !important}
+      .fnl{grid-template-columns:110px 1fr 46px !important}
+      .sec-bar{grid-template-columns:70px 1fr 56px !important}
+      .trow{grid-template-columns:1.3fr .55fr .65fr !important;gap:6px !important;padding:5px 8px !important}
+      .trow div{font-size:10.5px !important}
+    }
+  </style>
+
+  <section class="page">
+    <div class="content">
+
+      <header class="header">
+        <div>
+          <div class="kicker">Procivil x NewCo · One Pager final · A4</div>
+          <h1>Qué tenemos que coger de Procivil para replicarlo en la NewCo.</h1>
+          <div class="sub">
+            Separado por promociones: <strong>130</strong> Sep-23/Oct-24, <strong>131</strong> Sep-24/Sep-25 y <strong>132</strong> Sep-25/Jul-26. La P&L es de gestión: parte de diarios y reordena costes para mostrar la economía replicable. Los datos con <strong>e</strong> son estimaciones/proxies.
+          </div>
+        </div>
+        <div class="thesis">
+          <div class="kicker">Tesis para presentar</div>
+          <p>
+            Procivil es un <strong>sistema operativo de oposición online</strong>: nicho + autoridad, cuota estable, tutoría activa, clases comunes, banco de test y costes docentes variables. La NewCo debe copiar ese motor y abrir PN/Prisiones con CRM, CAC real, coste por alumno y gobierno 50/50.
+          </p>
+        </div>
+      </header>
+
+      <section class="metrics">
+        <div class="metric"><div class="label">Ventas 2025</div><div class="value">3,66M€</div><div class="desc">+35,5% YoY · verif. diarios</div></div>
+        <div class="metric"><div class="label">Pagadores únicos</div><div class="value">9.754</div><div class="desc">Ingreso pago&gt;0 · ene25-may26</div></div>
+        <div class="metric"><div class="label">Ingreso core</div><div class="value">98,1%</div><div class="desc">curso Ingreso s/ total pagos</div></div>
+        <div class="metric hero"><div class="label">Docente/alumno-mes</div><div class="value">2,21€</div><div class="desc">Promo 132 · 81k€ / 8m / 4.575al</div></div>
+        <div class="metric"><div class="label">Rematrícula 131→132</div><div class="value">56,8%</div><div class="desc">3.075 / 5.411 IDs · verif.</div></div>
+        <div class="metric"><div class="label">EBITDA Owner</div><div class="value">2,65M€</div><div class="desc">2025 · 72,5% · Owner Earnings</div></div>
+      </section>
+
+      <section class="grid">
+
+        <div class="stack">
+          <article class="card">
+            <div class="head">
+              <div><div class="kicker">Cuota de mercado · plazas GC</div><h2>Plazas Procivil <span style="color:var(--muted);font-weight:850;font-size:6pt"> · vs total plazas GC</span></h2></div>
+              <span class="badge">real</span>
+            </div>
+            <div class="bars">
+              <div class="bar-row wide"><div class="bar-label">2024 · 633 pl / 2.721</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bar-value">23,3%</div></div>
+              <div class="bar-row wide"><div class="bar-label">2025 · 538 pl / 3.118</div><div class="track"><div class="fill" style="width:74%"></div></div><div class="bar-value">17,3%</div></div>
+              <div class="bar-row wide"><div class="bar-label">2026e · ~619 pl / 3.240<sup class="e">e</sup></div><div class="track"><div class="fill" style="width:82%"></div></div><div class="bar-value">19,1%<sup class="e">e</sup></div></div>
+            </div>
+            <div style="font-size:4.4pt;color:var(--muted);margin-top:1.0mm;line-height:1.18">~1 de cada 6 nuevos guardias civiles en 2025 sale de Procivil. GC convocó +14,6% plazas → nota de corte más alta. Conversión apto→plaza: 73,8% (2024) → 66,3% (2025).</div>
+          </article>
+
+          <article class="table">
+            <div class="head">
+              <div><div class="kicker">Resultados por promoción</div><h2>Aptos Procivil · 2024 vs 2025</h2></div>
+              <span class="badge">real</span>
+            </div>
+            <div class="trow headrow"><div>Concepto</div><div>2024</div><div>2025</div></div>
+            <div class="trow"><div><b>Aptos 1ª prueba</b> (presencia)</div><div>858</div><div>811</div></div>
+            <div class="trow"><div><b>Con plaza</b> efectiva</div><div>633</div><div>538</div></div>
+            <div class="trow"><div><b>Conversión apto→plaza</b></div><div>73,8%</div><div>66,3%</div></div>
+            <div class="trow"><div><b>Cuota / plazas GC</b></div><div>23,3%</div><div>17,3%</div></div>
+            <div class="trow total"><div><b>YoY plazas Procivil</b></div><div>—</div><div>-15,0%</div></div>
+            <div style="font-size:4.2pt;color:var(--muted);padding:.5mm .8mm;line-height:1.18">2024: Libre 538 ap (313 plaza) + Reserva 317 + Colegio 3 = 633 plazas. 2025: 811 aptos 1ª → suspendieron 273 en físicas/médico/entrevista → 538 con plaza final. Caída por subida nota corte (+14,6% plazas GC).</div>
+          </article>
+
+          <article class="rep">
+            <div class="head">
+              <div><div class="kicker">Qué copiar</div><h2>Sistema operativo Procivil</h2></div>
+              <span class="badge">8 pilares</span>
+            </div>
+            <div class="rep-grid">
+              <div class="rep-item"><div class="title">Nicho + autoridad</div><div class="text">100% GC, docentes ex-cuerpo, lenguaje del opositor.</div></div>
+              <div class="rep-item"><div class="title">Cuota integral 70-80€</div><div class="text">Sin matrícula, sin permanencia, todo incluido.</div></div>
+              <div class="rep-item"><div class="title">Tutoría activa</div><div class="text">Seguimiento mensual para frenar bajas (≤5% intra).</div></div>
+              <div class="rep-item"><div class="title">Contenido común</div><div class="text">Inglés, psicotécnicos, ortografía reutilizables.</div></div>
+              <div class="rep-item"><div class="title">11.000 preguntas propias</div><div class="text">Banco actualizado con cada cambio normativo.</div></div>
+              <div class="rep-item"><div class="title">Profesores variables</div><div class="text">50€/h estándar · 100-200€/h socios senior.</div></div>
+              <div class="rep-item"><div class="title">Rematrícula 80%</div><div class="text">Suspensos vuelven · ratio 4 referidos / aprobado.</div></div>
+              <div class="rep-item"><div class="title">CAC orgánico</div><div class="text">0,03% INCN en paid · todo boca-oreja y SEO.</div></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="stack">
+          <article class="card">
+            <div class="head">
+              <div><div class="kicker">Evolución de KPIs</div><h2>Motor mensual y coste por hora</h2></div>
+              <span class="badge e">real + proxy</span>
+            </div>
+            <div class="evol-grid">
+              <div class="evol">
+                <div class="evol-top"><div class="name">Base pagadora mensual · INGRESO pago&gt;0</div><div class="headline">3.547 → 5.176</div></div>
+                <div class="spark">
+                  <div class="col"><div class="barbox"><div class="vbar" style="height:69%"></div></div><div class="xlab">Sep25</div><div class="xval">3.547</div></div>
+                  <div class="col"><div class="barbox"><div class="vbar" style="height:62%"></div></div><div class="xlab">Oct25</div><div class="xval">3.227</div></div>
+                  <div class="col"><div class="barbox"><div class="vbar" style="height:84%"></div></div><div class="xlab">Nov25</div><div class="xval">4.343</div></div>
+                  <div class="col"><div class="barbox"><div class="vbar" style="height:92%"></div></div><div class="xlab">Ene26</div><div class="xval">4.748</div></div>
+                  <div class="col"><div class="barbox"><div class="vbar" style="height:100%"></div></div><div class="xlab">Abr26</div><div class="xval">5.176</div></div>
+                </div>
+              </div>
+
+              <div class="evol">
+                <div class="evol-top"><div class="name">Reposición mensual estable</div><div class="headline">653 / 539<sup class="e">e</sup></div></div>
+                <div class="bars">
+                  <div class="bar-row"><div class="bar-label">Altas pago-mes</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bar-value">653<sup class="e">e</sup></div></div>
+                  <div class="bar-row"><div class="bar-label">Caídas pago-mes</div><div class="track"><div class="fill" style="width:83%"></div></div><div class="bar-value">539<sup class="e">e</sup></div></div>
+                  <div class="bar-row"><div class="bar-label">Neto</div><div class="track"><div class="fill" style="width:17%"></div></div><div class="bar-value">+114<sup class="e">e</sup></div></div>
+                </div>
+              </div>
+
+              <div class="evol">
+                <div class="evol-top"><div class="name">Rematriculación Ingreso</div><div class="headline">56,8%</div></div>
+                <div class="bars">
+                  <div class="bar-row"><div class="bar-label">Curso 131</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bar-value">5.411</div></div>
+                  <div class="bar-row"><div class="bar-label">Repiten 132</div><div class="track"><div class="fill" style="width:56.8%"></div></div><div class="bar-value">3.075</div></div>
+                  <div class="bar-row"><div class="bar-label">Ret. suspensos</div><div class="track"><div class="fill" style="width:76%"></div></div><div class="bar-value">~76%<sup class="e">e</sup></div></div>
+                </div>
+              </div>
+
+              <div class="evol">
+                <div class="evol-top"><div class="name">Coste hora · Promo 132</div><div class="headline">58€ → 190€ → 331€<sup class="e">e</sup></div></div>
+                <div class="bars">
+                  <div class="bar-row"><div class="bar-label">Clase directa</div><div class="track"><div class="fill" style="width:18%"></div></div><div class="bar-value">58€/h</div></div>
+                  <div class="bar-row"><div class="bar-label">+ variables alumno</div><div class="track"><div class="fill" style="width:57%"></div></div><div class="bar-value">190€/h<sup class="e">e</sup></div></div>
+                  <div class="bar-row"><div class="bar-label">+ fijos identific.</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bar-value">331€/h<sup class="e">e</sup></div></div>
+                </div>
+              </div>
+
+              <div class="evol">
+                <div class="evol-top"><div class="name">Plataforma / CTO · Orlando + dev</div><div class="headline">209k 2025 · 67k YTD</div></div>
+                <div class="bars">
+                  <div class="bar-row"><div class="bar-label">CTO Orlando</div><div class="track"><div class="fill" style="width:25%"></div></div><div class="bar-value">52k</div></div>
+                  <div class="bar-row"><div class="bar-label">Mantenim. + código</div><div class="track"><div class="fill" style="width:75%"></div></div><div class="bar-value">157k</div></div>
+                  <div class="bar-row"><div class="bar-label">2026 YTD</div><div class="track"><div class="fill" style="width:32%"></div></div><div class="bar-value">67k</div></div>
+                </div>
+              </div>
+
+              <div class="evol">
+                <div class="evol-top"><div class="name">Cuota por curso · Ingreso (precio medio pago)</div><div class="headline">72,07€ → 73,37€</div></div>
+                <div class="bars">
+                  <div class="bar-row"><div class="bar-label">Curso 131</div><div class="track"><div class="fill" style="width:98%"></div></div><div class="bar-value">72,07€</div></div>
+                  <div class="bar-row"><div class="bar-label">Curso 132</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bar-value">73,37€</div></div>
+                  <div class="bar-row"><div class="bar-label">Entrevista</div><div class="track"><div class="fill" style="width:100%;background:linear-gradient(90deg,var(--green2),#9b7200)"></div></div><div class="bar-value">151,75€</div></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="stack">
+          <article class="table">
+            <div class="head">
+              <div><div class="kicker">Financiero · gestión 2025</div><h2>P&L corta + KPIs + coste clase</h2></div>
+              <span class="badge">listo comité</span>
+            </div>
+
+            <div class="finance-split">
+              <div class="tiny-table">
+                <div class="tiny-title">P&L gestión 2025</div>
+                <div class="trow headrow"><div>Partida</div><div>€</div><div>% ventas</div></div>
+                <div class="trow"><div><b>Ingresos</b></div><div>3.658k</div><div>100%</div></div>
+                <div class="trow"><div><b>Costes docentes directos</b></div><div>-122k</div><div>-3,3%</div></div>
+                <div class="trow"><div><b>Variable alumno*</b></div><div>-183k<sup class="e">e</sup></div><div>-5,0%</div></div>
+                <div class="trow"><div><b>Coste plataforma</b></div><div>-209k</div><div>-5,7%</div></div>
+                <div class="trow"><div><b>Margen operativo</b></div><div>3.144k<sup class="e">e</sup></div><div>85,9%</div></div>
+                <div class="trow"><div><b>Personal administrativo</b></div><div>-156k</div><div>-4,3%</div></div>
+                <div class="trow"><div><b>Gastos explot. ajust.</b><br>(excl. socios/vinculadas + QoE)</div><div>-337k<sup class="e">e</sup></div><div>-9,2%</div></div>
+                <div class="trow total"><div><b>EBITDA ajustado</b></div><div>2.65M</div><div>72,6%</div></div>
+              </div>
+
+              <div class="tiny-table">
+                <div class="tiny-title">KPIs principales</div>
+                <div class="trow headrow"><div>KPI</div><div>Dato</div><div>Lectura</div></div>
+                <div class="trow"><div><b>ARPU mensual</b></div><div>73,4€</div><div>pricing</div></div>
+                <div class="trow"><div><b>CAC visible</b></div><div>1,8€<sup class="e">e</sup></div><div>orgánico</div></div>
+                <div class="trow"><div><b>Docente/alumno-mes</b></div><div>2,21€</div><div>escala</div></div>
+                <div class="trow"><div><b>Rematrícula 131→132</b></div><div>56,8%</div><div>base</div></div>
+                <div class="trow"><div><b>Payback CAC</b></div><div>&lt;1m<sup class="e">e</sup></div><div>proxy</div></div>
+                <div class="trow"><div><b>Churn pago-mes</b></div><div>12,0%<sup class="e">e</sup></div><div>proxy</div></div>
+                <div class="trow"><div><b>EBITDA contable/QoE</b></div><div>271k / 400k</div><div>puente</div></div>
+              </div>
+            </div>
+
+            <div style="height:1.4mm"></div>
+
+            <div class="tiny-table">
+              <div class="tiny-title">Escandallo coste por hora/clase · Promo 132 Sep-25/Abr-26</div>
+              <div class="trow headrow"><div>Componente</div><div>€</div><div>€/h sobre 1.385h</div></div>
+              <div class="trow"><div><b>Coste clases directo</b></div><div>80,7k</div><div>58,3€/h</div></div>
+              <div class="trow"><div><b>Mercedes variable 1,5€/al.</b></div><div>54,8k<sup class="e">e</sup></div><div>39,6€/h</div></div>
+              <div class="trow"><div><b>Jesús variable 1,5€/al.</b></div><div>54,8k<sup class="e">e</sup></div><div>39,6€/h</div></div>
+              <div class="trow"><div><b>PRINNA 2€/al.</b></div><div>73,1k<sup class="e">e</sup></div><div>52,8€/h</div></div>
+              <div class="trow"><div><b>Subtotal variable</b></div><div>263,5k<sup class="e">e</sup></div><div>190,2€/h</div></div>
+              <div class="trow"><div><b>Fijos identificados</b></div><div>195,4k<sup class="e">e</sup></div><div>141,1€/h</div></div>
+              <div class="trow total"><div><b>Coste cargado operativo</b></div><div>458,9k</div><div>331,3€/h<sup class="e">e</sup></div></div>
+            </div>
+          </article>
+
+          <article class="note">
+            <strong>Lectura experta:</strong> el coste directo de clase es bajo frente al ARPU, pero el coste correcto no es solo profesor/hora: hay variables por alumno —Mercedes, Jesús y PRINNA— y fijos mensuales de soporte, tutoría, tecnología y marca. La NewCo debe medir coste por alumno, coste por hora, CAC, retención y resultado académico.
+          </article>
+        </div>
+      </section>
+
+      <!-- SECTOR DASHBOARD — fila 1: KPIs sector y evolución -->
+      <section class="sector">
+        <article class="sec-card">
+          <div class="sec-title">Plazas Guardia Civil · OEP</div>
+          <div class="sec-headline">2.154 → 3.118 <span style="color:var(--lime);font-size:5pt">+45%</span></div>
+          <div class="sec-sub">Convocatoria oficial Estado 2020-2025</div>
+          <div class="mini-spark">
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:65%"></div></div><div class="ms-l">20</div><div class="ms-v">2.154</div></div>
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:72%"></div></div><div class="ms-l">21</div><div class="ms-v">2.380<sup class="e">e</sup></div></div>
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:76%"></div></div><div class="ms-l">22</div><div class="ms-v">2.520<sup class="e">e</sup></div></div>
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:80%"></div></div><div class="ms-l">23</div><div class="ms-v">2.650<sup class="e">e</sup></div></div>
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:82%"></div></div><div class="ms-l">24</div><div class="ms-v">2.721</div></div>
+            <div class="ms-col"><div class="ms-box"><div class="ms-bar" style="height:100%"></div></div><div class="ms-l">25</div><div class="ms-v">3.118</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card">
+          <div class="sec-title">Ratio opositores / plaza GC</div>
+          <div class="sec-headline">15,2 → 8,9</div>
+          <div class="sec-sub">Menor presión exam, mejor conversión Procivil</div>
+          <div class="sec-bars">
+            <div class="sec-bar"><div class="sb-l">2022</div><div class="sb-t"><div class="sb-f" style="width:100%"></div></div><div class="sb-v">15,2x</div></div>
+            <div class="sec-bar"><div class="sb-l">2023<sup class="e">e</sup></div><div class="sb-t"><div class="sb-f" style="width:80%"></div></div><div class="sb-v">~12x<sup class="e">e</sup></div></div>
+            <div class="sec-bar"><div class="sb-l">2024</div><div class="sb-t"><div class="sb-f" style="width:50%"></div></div><div class="sb-v">7,6x</div></div>
+            <div class="sec-bar"><div class="sb-l">2025</div><div class="sb-t"><div class="sb-f" style="width:58%"></div></div><div class="sb-v">8,9x</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card dark">
+          <div class="sec-title">TAM Wave 1 NewCo · expansión de mercado</div>
+          <div class="sec-headline">27.627 → 86.626 <span style="font-size:5.4pt;color:#fff">×3,1</span></div>
+          <div class="sec-sub">Solo opositores 2025 — sin contar Justicia ni Defensa</div>
+          <div class="sec-bars">
+            <div class="sec-bar"><div class="sb-l">Solo GC</div><div class="sb-t"><div class="sb-f" style="width:32%"></div></div><div class="sb-v">27.627</div></div>
+            <div class="sec-bar"><div class="sb-l">+ PN</div><div class="sb-t"><div class="sb-f" style="width:65%"></div></div><div class="sb-v">56.127</div></div>
+            <div class="sec-bar"><div class="sb-l">+ Mossos</div><div class="sb-t"><div class="sb-f" style="width:84%"></div></div><div class="sb-v">72.842</div></div>
+            <div class="sec-bar"><div class="sb-l">+ IIPP</div><div class="sb-t"><div class="sb-f" style="width:95%"></div></div><div class="sb-v">81.814</div></div>
+            <div class="sec-bar"><div class="sb-l">+ Ertz/Lo</div><div class="sb-t"><div class="sb-f" style="width:100%"></div></div><div class="sb-v">86.626</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card">
+          <div class="sec-title">Aprobados Procivil · aptos 1ª prueba vs plaza final</div>
+          <div class="sec-headline">538 con plaza 2025<span style="font-size:5pt;color:var(--muted)"> · 811 aptos 1ª</span></div>
+          <div class="sec-sub">Conv. apto→plaza: 73,8% (24) → 66,3% (25) — corte más alto</div>
+          <div class="sec-bars">
+            <div class="sec-bar"><div class="sb-l">24 · aptos 1ª</div><div class="sb-t"><div class="sb-f" style="width:100%"></div></div><div class="sb-v">858</div></div>
+            <div class="sec-bar"><div class="sb-l">24 · c/plaza</div><div class="sb-t"><div class="sb-f" style="width:74%"></div></div><div class="sb-v">633</div></div>
+            <div class="sec-bar"><div class="sb-l">25 · aptos 1ª</div><div class="sb-t"><div class="sb-f" style="width:95%"></div></div><div class="sb-v">811</div></div>
+            <div class="sec-bar"><div class="sb-l">25 · c/plaza</div><div class="sb-t"><div class="sb-f" style="width:63%"></div></div><div class="sb-v">538</div></div>
+            <div class="sec-bar"><div class="sb-l">26e c/plaza</div><div class="sb-t"><div class="sb-f" style="width:72%;background:linear-gradient(90deg,var(--green2),#9b7200)"></div></div><div class="sb-v">619<sup class="e">e</sup></div></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTOR DASHBOARD — fila 2: LTV, funnel, mercados, M&A -->
+      <section class="sector2">
+        <article class="sec-card">
+          <div class="sec-title">LTV cohort 2025 real · Owner economics</div>
+          <div class="sec-headline">580€<span style="font-size:5pt;color:var(--muted)"> /alumno</span></div>
+          <div class="sec-sub">8.644 alumnos únicos · 7,1 meses pago medio · P90=14m</div>
+          <div class="sec-bars" style="margin-top:1mm">
+            <div class="sec-bar"><div class="sb-l">≤3m pago</div><div class="sb-t"><div class="sb-f" style="width:30%"></div></div><div class="sb-v">2.576</div></div>
+            <div class="sec-bar"><div class="sb-l">4-7m pago</div><div class="sb-t"><div class="sb-f" style="width:48%"></div></div><div class="sb-v">~3.030</div></div>
+            <div class="sec-bar"><div class="sb-l">8-12m pago</div><div class="sb-t"><div class="sb-f" style="width:35%"></div></div><div class="sb-v">~2.280</div></div>
+            <div class="sec-bar"><div class="sb-l">13m+ pago</div><div class="sb-t"><div class="sb-f" style="width:11%"></div></div><div class="sb-v">~758</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card">
+          <div class="sec-title">Funnel 2 fases · proceso oposición GC 2025</div>
+          <div class="sec-headline">811 aptos → 538 plaza</div>
+          <div class="sec-sub">1ª fase test+teoría → corte plazas → 2ª fase física+médico+entrevista</div>
+          <div class="funnel">
+            <div class="fnl"><div class="fnl-l">Matriculados Procivil</div><div class="fnl-box"><div class="fnl-fill" style="width:100%"></div></div><div class="fnl-v">~4.157</div></div>
+            <div class="fnl"><div class="fnl-l">Aptos 1ª prueba (test)</div><div class="fnl-box"><div class="fnl-fill" style="width:20%"></div></div><div class="fnl-v">811</div></div>
+            <div class="fnl"><div class="fnl-l">Convocados a 2ª fase</div><div class="fnl-box"><div class="fnl-fill" style="width:20%"></div></div><div class="fnl-v">811</div></div>
+            <div class="fnl"><div class="fnl-l">Suspenden 2ª fase</div><div class="fnl-box"><div class="fnl-fill" style="width:7%;background:linear-gradient(90deg,var(--green2),#9b7200)"></div></div><div class="fnl-v">273</div></div>
+            <div class="fnl"><div class="fnl-l">Plaza efectiva final</div><div class="fnl-box"><div class="fnl-fill" style="width:13%"></div></div><div class="fnl-v">538</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card">
+          <div class="sec-title">Mercados 2025 · ratio opositores/plaza</div>
+          <div class="sec-headline">PN 10,3x · Mossos 10,5x</div>
+          <div class="sec-sub">Wave 1: priorizar PN (escala) e IIPP (ratio + formato test)</div>
+          <div class="sec-bars" style="margin-top:.9mm">
+            <div class="sec-bar"><div class="sb-l">PN · 2.764pl</div><div class="sb-t"><div class="sb-f" style="width:100%"></div></div><div class="sb-v">10,3x</div></div>
+            <div class="sec-bar"><div class="sb-l">Mossos · 1.585</div><div class="sb-t"><div class="sb-f" style="width:100%"></div></div><div class="sb-v">10,5x</div></div>
+            <div class="sec-bar"><div class="sb-l">IIPP · 900pl</div><div class="sb-t"><div class="sb-f" style="width:98%"></div></div><div class="sb-v">10,0x</div></div>
+            <div class="sec-bar"><div class="sb-l">GC · 3.118pl</div><div class="sb-t"><div class="sb-f" style="width:88%"></div></div><div class="sb-v">8,9x</div></div>
+            <div class="sec-bar"><div class="sb-l">Ertz/Lo · 650</div><div class="sb-t"><div class="sb-f" style="width:73%"></div></div><div class="sb-v">7,4x</div></div>
+          </div>
+        </article>
+
+        <article class="sec-card dark">
+          <div class="sec-title">Comparables M&amp;A test-prep · sector</div>
+          <div class="sec-headline">8-9× EBITDA <span style="font-size:4.5pt;color:rgba(255,255,255,.65)">objetivo grupo</span></div>
+          <div class="sec-sub">Valoración orientativa grupo año 4: 5,0 M€ × 9× = 44 M€</div>
+          <div style="margin-top:.9mm">
+            <div class="comp-row"><div class="cr-geo">ES</div><div class="cr-deal" style="color:#fff">KKR · MasterD (test-prep opositores)</div><div class="cr-yr" style="color:rgba(255,255,255,.7)">2021<sup class="e">e</sup></div></div>
+            <div class="comp-row"><div class="cr-geo">ES</div><div class="cr-deal" style="color:#fff">Corpfin · Grupo Versus + Profortia</div><div class="cr-yr" style="color:rgba(255,255,255,.7)">B&amp;B</div></div>
+            <div class="comp-row"><div class="cr-geo">ES</div><div class="cr-deal" style="color:#fff">Investindustrial · Campus / CEAC / Deusto</div><div class="cr-yr" style="color:rgba(255,255,255,.7)">2022</div></div>
+            <div class="comp-row"><div class="cr-geo">EU</div><div class="cr-deal" style="color:#fff">EQT · Universidad Europea (&gt;2 bn€)</div><div class="cr-yr" style="color:rgba(255,255,255,.7)">2024</div></div>
+            <div class="comp-row"><div class="cr-geo">US</div><div class="cr-deal" style="color:#fff">KKR · Instructure (LMS)</div><div class="cr-yr" style="color:rgba(255,255,255,.7)">2024</div></div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div class="legend">
+          <span><i class="dot real"></i> Verificado diarios + ficheros pagos + dossier PIA</span>
+          <span><i class="dot est"></i> Estimación/proxy marcado con "e"</span>
+          <span><i class="dot claim"></i> Claim pendiente CRM</span>
+        </div>
+        <div class="right">*Promo 132 Sep-25/Abr-26. Variable alumno = Mercedes 1,5€ + Jesús 1,5€ + PRINNA 2€/alumno-mes (resumen costes adjunto). Coordinadores curso (Manuel/Rubén/Miguel) +5€/al/mes adicional. Fijos identif. ≈ 24,4k€/mes × 8m. TAM y ratios: OEP 2025 + dossier PIA v2.</div>
+      </footer>
+
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
