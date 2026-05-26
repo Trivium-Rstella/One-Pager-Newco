@@ -5,160 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>One Pager · NewCo</title>
   <style>
-    /* ── Password Gate ── */
-    #gate {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #063f3f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-    }
-    #gate-box {
-      background: #fff;
-      border-radius: 20px;
-      padding: 40px 44px 36px;
-      width: 360px;
-      max-width: 90vw;
-      box-shadow: 0 24px 60px rgba(6,63,63,.35);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    #gate-box::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, #063f3f, #d8df19);
-    }
-    #gate-logo {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      font-weight: 900;
-      color: #0b5b56;
-      margin-bottom: 6px;
-    }
-    #gate-title {
-      font-size: 22px;
-      font-weight: 950;
-      color: #111416;
-      letter-spacing: -.04em;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-    #gate-sub {
-      font-size: 12.5px;
-      color: #68736f;
-      margin-bottom: 26px;
-      line-height: 1.4;
-    }
-    #gate-input {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1.5px solid #dce5df;
-      border-radius: 10px;
-      padding: 11px 14px;
-      font-size: 15px;
-      font-family: inherit;
-      color: #111416;
-      outline: none;
-      transition: border-color .18s;
-      background: #f4f7f4;
-      text-align: center;
-      letter-spacing: .08em;
-    }
-    #gate-input:focus { border-color: #063f3f; background: #fff; }
-    #gate-btn {
-      margin-top: 14px;
-      width: 100%;
-      padding: 12px;
-      background: #063f3f;
-      color: #d8df19;
-      border: none;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .18s, transform .12s;
-    }
-    #gate-btn:hover { background: #0b5b56; transform: translateY(-1px); }
-    #gate-btn:active { transform: translateY(0); }
-    #gate-error {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #c0392b;
-      font-weight: 700;
-      display: none;
-    }
-    #gate-footer {
-      margin-top: 18px;
-      font-size: 10.5px;
-      color: #a0aaa7;
-      letter-spacing: .06em;
-    }
-    /* shake animation */
-    @keyframes shake {
-      0%,100%{transform:translateX(0)}
-      20%{transform:translateX(-8px)}
-      40%{transform:translateX(8px)}
-      60%{transform:translateX(-6px)}
-      80%{transform:translateX(6px)}
-    }
-    .shake { animation: shake .4s ease; }
 
-    /* hide main content until unlocked */
-    #main-content { display: none; }
-  </style>
-</head>
-<body>
-
-<!-- ── PASSWORD GATE ── -->
-<div id="gate">
-  <div id="gate-box">
-    <div id="gate-logo">Procivil × NewCo</div>
-    <div id="gate-title">One Pager</div>
-    <div id="gate-sub">Documento restringido.<br>Introduce la contraseña para continuar.</div>
-    <input id="gate-input" type="password" placeholder="Contraseña" autocomplete="current-password" />
-    <button id="gate-btn" onclick="checkPass()">Acceder →</button>
-    <div id="gate-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
-    <div id="gate-footer">CONFIDENCIAL · SOLO USO INTERNO</div>
-  </div>
-</div>
-
-<script>
-  // Allow Enter key to submit
-  document.getElementById('gate-input').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') checkPass();
-  });
-
-  function checkPass() {
-    const val = document.getElementById('gate-input').value;
-    if (val === 'newco2026!') {
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('main-content').style.display = '';
-    } else {
-      const box = document.getElementById('gate-box');
-      const err = document.getElementById('gate-error');
-      err.style.display = 'block';
-      box.classList.remove('shake');
-      void box.offsetWidth; // reflow to restart animation
-      box.classList.add('shake');
-      document.getElementById('gate-input').value = '';
-      document.getElementById('gate-input').focus();
-    }
-  }
-</script>
-
-<!-- ── MAIN CONTENT (hidden until password) ── -->
-<div id="main-content">
-<style>
     :root{
       --green:#063f3f;
       --green2:#0b5b56;
@@ -952,9 +799,157 @@
       .trow{grid-template-columns:1.3fr .55fr .65fr !important;gap:6px !important;padding:5px 8px !important}
       .trow div{font-size:10.5px !important}
     }
+  
   </style>
+  <style>
+    /* ── Password Gate ── */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #063f3f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+    #gate-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 44px 36px;
+      width: 360px;
+      max-width: 90vw;
+      box-shadow: 0 24px 60px rgba(6,63,63,.35);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #gate-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #063f3f, #d8df19);
+    }
+    #gate-logo {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-weight: 900;
+      color: #0b5b56;
+      margin-bottom: 6px;
+    }
+    #gate-title {
+      font-size: 22px;
+      font-weight: 950;
+      color: #111416;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    #gate-sub {
+      font-size: 12.5px;
+      color: #68736f;
+      margin-bottom: 26px;
+      line-height: 1.4;
+    }
+    #gate-input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #dce5df;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #111416;
+      outline: none;
+      transition: border-color .18s;
+      background: #f4f7f4;
+      text-align: center;
+      letter-spacing: .08em;
+    }
+    #gate-input:focus { border-color: #063f3f; background: #fff; }
+    #gate-btn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px;
+      background: #063f3f;
+      color: #d8df19;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .18s, transform .12s;
+    }
+    #gate-btn:hover { background: #0b5b56; transform: translateY(-1px); }
+    #gate-error {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #c0392b;
+      font-weight: 700;
+      display: none;
+    }
+    #gate-footer {
+      margin-top: 18px;
+      font-size: 10.5px;
+      color: #a0aaa7;
+      letter-spacing: .06em;
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(6px)}
+    }
+    .shake { animation: shake .4s ease; }
+    #main-content { display: none; }
+  </style>
+</head>
+<body>
 
-  <section class="page">
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div id="gate-box">
+    <div id="gate-logo">Procivil × NewCo</div>
+    <div id="gate-title">One Pager</div>
+    <div id="gate-sub">Documento restringido.<br>Introduce la contraseña para continuar.</div>
+    <input id="gate-input" type="password" placeholder="Contraseña" autocomplete="current-password" />
+    <button id="gate-btn" onclick="checkPass()">Acceder →</button>
+    <div id="gate-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+    <div id="gate-footer">CONFIDENCIAL · SOLO USO INTERNO</div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('gate-input').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') checkPass();
+  });
+  function checkPass() {
+    var val = document.getElementById('gate-input').value;
+    if (val === 'newco2026!') {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    } else {
+      var box = document.getElementById('gate-box');
+      var err = document.getElementById('gate-error');
+      err.style.display = 'block';
+      box.classList.remove('shake');
+      void box.offsetWidth;
+      box.classList.add('shake');
+      document.getElementById('gate-input').value = '';
+      document.getElementById('gate-input').focus();
+    }
+  }
+</script>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+<section class="page">
     <div class="content">
 
       <header class="header">
@@ -1271,7 +1266,7 @@
 
     </div>
   </section>
-
 </div>
+
 </body>
 </html>
